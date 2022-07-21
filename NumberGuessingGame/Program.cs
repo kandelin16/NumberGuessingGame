@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NumberGuessingGame
 {
@@ -23,14 +24,15 @@ namespace NumberGuessingGame
             Random random = new Random();
             int numToGuess = random.Next(0, 10000);
             int guess = 10001;
-            int guessCount = 0;
+            HashSet<int> guesses = new HashSet<int>();
+            
 
             //As long as the guess is different than the random number, continue asking for a guess.
             while (guess != numToGuess) {
                 Console.WriteLine("Please type in a guess as a number!");
                 string stringInput = Console.ReadLine();
 
-                //Ask for a new guess if the guess is not a number.
+                //Ask for a new guess if the input from the player is not a digit.
                 while (!int.TryParse(stringInput, out guess))
                 {
                     Console.WriteLine("Guesses must be digits.");
@@ -47,12 +49,12 @@ namespace NumberGuessingGame
                     Console.WriteLine("Your guess is too low! Try again.");
                 }
 
-                //Increment the guess count
-                guessCount++;
+                //Add this guess to the guess hashset
+                guesses.Add(guess);
             }
 
             //Finish the game
-            Console.WriteLine("Congrats! You won the game in " + Convert.ToString(guessCount) + " guesses!");
+            Console.WriteLine("Congrats! You won the game in " + Convert.ToString(guesses.Count) + " guesses!");
         }
     }
 }
